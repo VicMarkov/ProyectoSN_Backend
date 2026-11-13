@@ -1,0 +1,10 @@
+{
+  "name": "sonido-vivo-lambda-rds",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "dependencies": {
+    "pg": "^8.13.0"
+  }
+}

@@ -1,0 +1,46 @@
+Casos de prueba de la API Sonido Vivo - evidencia de ejecución
+Fecha: 12-11-2026, 22:08:31
+Servidor: http://localhost:3000  (Swagger UI: http://localhost:3000/api/docs)
+BD reiniciada con db/schema.sql + db/seed.sql antes de ejecutar.
+
+GRUPO        CASO                                                        ESPERADO  OBTENIDO  RESULTADO
+---------------------------------------------------------------------------------------------------
+Documentación Swagger UI responde en GET /api/docs/                      200        200        OK
+Catálogo     GET /api/productos lista productos                         200        200        OK
+Catálogo     El catálogo sembrado tiene 51 productos                    51         51         OK
+Catálogo     Filtro por categoría devuelve 5 baterías                   5          5          OK
+Catálogo     Búsqueda por nombre/marca/modelo responde 200              200        200        OK
+Catálogo     GET /api/productos/categorias devuelve 10 categorías       10         10         OK
+Catálogo     Producto inexistente responde 404                          404        404        OK
+Catálogo     Identificador no numérico responde 400                     400        400        OK
+Registro     Registro válido responde 201                               201        201        OK
+Registro     El rol asignado por el servidor es Cliente                 Cliente    Cliente    OK
+Registro     Email ya registrado responde 409                           409        409        OK
+Registro     Contraseña corta rechazada con 400                         400        400        OK
+Login        Credenciales válidas responden 200 con token               200        200        OK
+Login        La respuesta incluye el token y su vencimiento             true       true       OK
+Login        Contraseña incorrecta responde 401                         401        401        OK
+Login        Email inexistente responde 401                             401        401        OK
+Login        Mismo mensaje genérico no revela si el email existe        true       true       OK
+Login        Email con formato inválido responde 400                    400        400        OK
+Sesión       GET /api/auth/me con token válido responde 200             200        200        OK
+Sesión       El usuario de la sesión es Cliente Demo                    demo@sonidovivo.cl  demo@sonidovivo.cl  OK
+Sesión       Petición sin token responde 401                            401        401        OK
+Sesión       Token alterado (firma inválida) responde 401               401        401        OK
+Sesión       Token expirado responde 401                                401        401        OK
+Sesión       Token con emisor (iss) incorrecto responde 401             401        401        OK
+Sesión       Token sin destinatario (aud) responde 401                  401        401        OK
+Sesión       Token con algoritmo "none" rechazado con 401               401        401        OK
+Registro     La cuenta recién creada puede iniciar sesión               200        200        OK
+Stock        PUT stock sin token responde 401                           401        401        OK
+Stock        Cliente sin rol vendedor responde 403                      403        403        OK
+Stock        Vendedor ajusta stock GA001 (SALIDA 2) con 200             200        200        OK
+Stock        El stock resultante es el anterior menos 2                 6          6          OK
+Stock        SALIDA mayor que el stock responde 409 (conflicto de negocio) 409        409        OK
+Stock        cantidad = 0 rechazada con 400                             400        400        OK
+Stock        El ajuste quedó registrado en movimiento_stock (auditoría) 1          1          OK
+General      Ruta inexistente responde 404 en JSON                      404        404        OK
+General      El cuerpo del 404 es JSON con mensaje                      La ruta solicitada no existe.  La ruta solicitada no existe.  OK
+CORS         Preflight desde el origen del frontend (localhost:5173) es aceptado true       true       OK
+
+Total: 37 casos | OK: 37 | Fallas: 0

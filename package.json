@@ -1,0 +1,33 @@
+{
+  "name": "sonido-vivo-backend",
+  "version": "1.0.0",
+  "description": "API REST del proyecto semestral Sonido Vivo (DSY1104)",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "node scripts/smoke.mjs",
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:start": "node scripts/db.mjs",
+    "db:reset": "node scripts/reset.mjs",
+    "pruebas:api": "node scripts/smoke.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.4",
+    "express-validator": "^7.3.2",
+    "js-yaml": "^5.5.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "embedded-postgres": "^16.15.0-beta.19"
+  }
+}

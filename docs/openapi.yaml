@@ -1,0 +1,687 @@
+openapi: 3.0.3
+info:
+  title: Sonido Vivo API
+  version: 1.0.0
+  description: |
+    API REST del proyecto semestral Sonido Vivo (DSY1104).
+
+    Operaciones marcadas con `x-estado: implementado` están construidas y
+    probadas; las marcadas con `x-estado: pendiente` son contratos propuestos
+    de fases siguientes (carrito, pedidos, administración y contacto).
+  contact:
+    name: Vicente Markov
+servers:
+  - url: http://localhost:3000
+    description: Desarrollo local
+tags:
+  - name: auth
+    description: Registro e inicio de sesión con JWT
+  - name: productos
+    description: Catálogo de productos y categorías
+  - name: stock
+    description: Ajuste de stock (vendedor / administrador)
+  - name: carrito
+    description: Pendiente - carrito de compras
+  - name: pedidos
+    description: Pendiente - pedidos y sus estados
+  - name: contacto
+    description: Pendiente - mensajes de contacto
+  - name: usuarios
+    description: Pendiente - administración de usuarios
+
+paths:
+  /api/auth/register:
+    post:
+      tags: [auth]
+      summary: Registrar un nuevo cliente
+      x-estado: implementado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistroEntrada'
+            example:
+              nombre: 'María Pérez'
+              email: 'maria@ejemplo.cl'
+              password: 'clave12345'
+              telefono: '+56 9 4444 4444'
+      responses:
+        '201':
+          description: Cuenta creada. El rol inicial (Cliente) lo asigna el servidor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                  usuario:
+                    $ref: '#/components/schemas/Usuario'
+        '400':
+          description: Datos inválidos (validación del servidor)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorValidacion'
+        '409':
+          description: Ya existe una cuenta con ese correo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Demasiados intentos (rate limit)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/login:
+    post:
+      tags: [auth]
+      summary: Iniciar sesión y obtener un token JWT
+      description: |
+        El mensaje de error es idéntico cuando el correo no existe o la
+        contraseña no coincide, para no revelar cuentas registradas.
+      x-estado: implementado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credenciales'
+            example:
+              email: 'demo@sonidovivo.cl'
+              password: 'demo123'
+      responses:
+        '200':
+          description: Token de acceso emitido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '400':
+          description: Cuerpo inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorValidacion'
+        '401':
+          description: Credenciales incorrectas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Demasiados intentos (rate limit)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/me:
+    get:
+      tags: [auth]
+      summary: Consultar el usuario de la sesión actual
+      x-estado: implementado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Usuario autenticado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  usuario:
+                    $ref: '#/components/schemas/Usuario'
+              example:
+                usuario:
+                  id: 3
+                  nombre: Cliente Demo
+                  email: demo@sonidovivo.cl
+                  telefono: null
+                  rol: Cliente
+                  activo: true
+                  fechaCreacion: '2026-11-12T00:00:00.000Z'
+        '401':
+          description: Token ausente, inválido, expirado, con emisor/destinatario incorrectos o algoritmo no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/productos:
+    get:
+      tags: [productos]
+      summary: Listar productos del catálogo (con filtro y paginación)
+      x-estado: implementado
+      parameters:
+        - name: categoria
+          in: query
+          schema:
+            type: string
+          example: Baterías
+        - name: q
+          in: query
+          description: Búsqueda por nombre, modelo o SKU
+          schema:
+            type: string
+          example: Yamaha
+        - name: pagina
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limite
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+      responses:
+        '200':
+          description: Lista paginada de productos activos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaProductos'
+              example:
+                productos:
+                  - id: 5
+                    sku: GA001
+                    nombre: Guitarra Acústica Folk
+                    modelo: F310
+                    descripcion: Tapa de abeto sólido, cuerpo de caoba, mástil de nato y sonido equilibrado.
+                    precio: 129990
+                    stock: 6
+                    stockMinimo: 3
+                    categoria: Guitarras Acústicas
+                    marca: Yamaha
+                    activo: true
+                paginacion:
+                  pagina: 1
+                  limite: 10
+                  total: 51
+                  paginas: 6
+        '400':
+          description: Parámetros inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorValidacion'
+
+  /api/productos/categorias:
+    get:
+      tags: [productos]
+      summary: Listar categorías activas con su cantidad de productos
+      x-estado: implementado
+      responses:
+        '200':
+          description: Categorías del catálogo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categorias:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Categoria'
+
+  /api/productos/{id}:
+    get:
+      tags: [productos]
+      summary: Obtener un producto por su identificador
+      x-estado: implementado
+      parameters:
+        - $ref: '#/components/parameters/IdProducto'
+      responses:
+        '200':
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  producto:
+                    $ref: '#/components/schemas/Producto'
+        '400':
+          description: Identificador inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorValidacion'
+        '404':
+          description: Producto no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/productos/{id}/stock:
+    put:
+      tags: [stock]
+      summary: Ajustar el stock de un producto (Administrador o Vendedor)
+      description: |
+        Flujo de negocio: `ENTRADA` suma unidades, `SALIDA` las descuenta y
+        `AJUSTE` fija el valor. Una salida mayor que el stock disponible
+        responde 409. Cada cambio queda registrado en `movimiento_stock`
+        con el usuario que lo realizó (auditoría).
+      x-estado: implementado
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdProducto'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AjusteStock'
+            example:
+              tipo: SALIDA
+              cantidad: 2
+              motivo: 'Venta en tienda'
+      responses:
+        '200':
+          description: Stock actualizado y movimiento registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultadoStock'
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorValidacion'
+        '401':
+          description: Token ausente, inválido o expirado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Rol sin permisos (solo Administrador o Vendedor)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Producto no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Stock insuficiente para la salida solicitada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/carrito:
+    get:
+      tags: [carrito]
+      summary: Obtener el carrito del usuario autenticado
+      x-estado: pendiente
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Carrito con sus líneas (a implementar)
+    post:
+      tags: [carrito]
+      summary: Agregar un producto al carrito
+      x-estado: pendiente
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Línea agregada (a implementar)
+
+  /api/carrito/{id}:
+    put:
+      tags: [carrito]
+      summary: Modificar la cantidad de una línea del carrito
+      x-estado: pendiente
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Línea actualizada (a implementar)
+
+  /api/pedidos:
+    get:
+      tags: [pedidos]
+      summary: Listar pedidos (propios del cliente; todos si es administrador)
+      x-estado: pendiente
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Pedidos del usuario (a implementar)
+    post:
+      tags: [pedidos]
+      summary: Crear un pedido desde el carrito
+      description: Valida stock, calcula totales y descuenta stock (movimiento SALIDA).
+      x-estado: pendiente
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Pedido creado (a implementar)
+        '409':
+          description: Conflicto de stock al confirmar el pedido
+
+  /api/pedidos/{id}/estado:
+    put:
+      tags: [pedidos]
+      summary: Cambiar el estado de un pedido (Administrador o Vendedor)
+      description: Enregistra el cambio en `historial_estado_pedido`.
+      x-estado: pendiente
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Estado actualizado (a implementar)
+
+  /api/contacto:
+    post:
+      tags: [contacto]
+      summary: Enviar un mensaje desde la página de contacto
+      x-estado: pendiente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [nombre, email, tipoConsulta, mensaje]
+              properties:
+                nombre:
+                  type: string
+                email:
+                  type: string
+                telefono:
+                  type: string
+                tipoConsulta:
+                  type: string
+                  enum: [STOCK, REPARACION, OTRA]
+                mensaje:
+                  type: string
+      responses:
+        '201':
+          description: Mensaje registrado (a implementar)
+
+  /api/usuarios/{id}:
+    get:
+      tags: [usuarios]
+      summary: Consultar un usuario (Administrador)
+      x-estado: pendiente
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuario (a implementar)
+    put:
+      tags: [usuarios]
+      summary: Activar, desactivar o cambiar el rol de un usuario (Administrador)
+      x-estado: pendiente
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuario actualizado (a implementar)
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Encabezado `Authorization: Bearer <token>`. El token se obtiene en
+        `POST /api/auth/login` y vence a los 60 minutos.
+
+  parameters:
+    IdProducto:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Mensaje genérico del error
+
+    ErrorValidacion:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Los datos enviados no son válidos.
+        errores:
+          type: array
+          items:
+            type: object
+            properties:
+              campo:
+                type: string
+              mensaje:
+                type: string
+
+    RegistroEntrada:
+      type: object
+      required: [nombre, email, password]
+      properties:
+        nombre:
+          type: string
+          minLength: 2
+          maxLength: 80
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 72
+        telefono:
+          type: string
+          maxLength: 20
+
+    Credenciales:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+
+    Usuario:
+      type: object
+      description: Los campos id, rol, activo y fechaCreacion los genera el servidor; no viajan desde el cliente
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        nombre:
+          type: string
+        email:
+          type: string
+        telefono:
+          type: string
+          nullable: true
+        rol:
+          type: string
+          readOnly: true
+          enum: [Administrador, Vendedor, Cliente]
+        activo:
+          type: boolean
+          readOnly: true
+        fechaCreacion:
+          type: string
+          format: date-time
+          readOnly: true
+
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT firmado (HS256), vigencia de 1 hora
+        tipoToken:
+          type: string
+          example: Bearer
+        expiraEn:
+          type: string
+          format: date-time
+        usuario:
+          $ref: '#/components/schemas/Usuario'
+
+    Producto:
+      type: object
+      description: Catálogo devuelto por la API; el id lo genera la base de datos y solo el servidor modifica stock y precios
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sku:
+          type: string
+          example: GA001
+        nombre:
+          type: string
+        modelo:
+          type: string
+          nullable: true
+        descripcion:
+          type: string
+          nullable: true
+        precio:
+          type: number
+          example: 129990
+        stock:
+          type: integer
+          readOnly: true
+        stockMinimo:
+          type: integer
+          readOnly: true
+        categoria:
+          type: string
+        marca:
+          type: string
+        activo:
+          type: boolean
+          readOnly: true
+
+    ListaProductos:
+      type: object
+      properties:
+        productos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Producto'
+        paginacion:
+          type: object
+          properties:
+            pagina:
+              type: integer
+            limite:
+              type: integer
+            total:
+              type: integer
+            paginas:
+              type: integer
+
+    Categoria:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        descripcion:
+          type: string
+          nullable: true
+        productos:
+          type: integer
+          description: Cantidad de productos activos en la categoría
+
+    AjusteStock:
+      type: object
+      required: [tipo, cantidad]
+      properties:
+        tipo:
+          type: string
+          enum: [ENTRADA, SALIDA, AJUSTE]
+        cantidad:
+          type: integer
+          minimum: 1
+        motivo:
+          type: string
+          maxLength: 120
+
+    ResultadoStock:
+      type: object
+      properties:
+        mensaje:
+          type: string
+        producto:
+          $ref: '#/components/schemas/Producto'
+        movimiento:
+          type: object
+          description: Fila generada por el servidor en movimiento_stock (auditoría)
+          properties:
+            id:
+              type: integer
+              readOnly: true
+            tipo:
+              type: string
+            cantidad:
+              type: integer
+            stockResultante:
+              type: integer
+              readOnly: true
+            fecha:
+              type: string
+              format: date-time
+              readOnly: true
