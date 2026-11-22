@@ -135,19 +135,19 @@ npm run build
 Frontend:
 
 ```text
-http://54.198.104.140
+http://3.211.234.101
 ```
 
 API y Swagger:
 
 ```text
-http://54.198.104.140/api/docs
+http://3.211.234.101/api/docs
 ```
 
 Health:
 
 ```text
-http://54.198.104.140/api/health
+http://3.211.234.101/api/health
 ```
 
 En EC2, verificar servicios:
@@ -156,7 +156,7 @@ En EC2, verificar servicios:
 sudo systemctl status sonido-vivo
 sudo nginx -t
 curl http://127.0.0.1:3000/api/health
-curl http://54.198.104.140/api/health
+curl http://3.211.234.101/api/health
 ```
 
 Si la base está vacía, aplicar esquema y semilla:
