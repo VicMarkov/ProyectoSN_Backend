@@ -4,12 +4,29 @@ import 'dotenv/config';
 import fs from 'node:fs';
 import pg from 'pg';
 
+const host = process.env.PGHOST || 'localhost';
+const esLocal = ['localhost', '127.0.0.1', '::1'].includes(host);
+const confirmado = String(process.env.CONFIRM_RESET || '').toUpperCase() === 'SI';
+
+if (!esLocal || !confirmado) {
+  console.error(
+    '[reset] operación bloqueada. Solo se permite en local y con CONFIRM_RESET=SI.\n' +
+      '        Para RDS usa db:setup (no destructivo).'
+  );
+  process.exit(1);
+}
+
+const usarSsl = ['true', '1', 'require'].includes(
+  String(process.env.PGSSL || process.env.DB_SSL || '').toLowerCase()
+);
+
 const client = new pg.Client({
-  host: process.env.PGHOST,
+  host,
   port: Number(process.env.PGPORT),
   user: process.env.PGUSER,
   password: process.env.PGPASSWORD,
   database: process.env.PGDATABASE,
+  ssl: usarSsl ? { rejectUnauthorized: false } : undefined,
 });
 
 try {

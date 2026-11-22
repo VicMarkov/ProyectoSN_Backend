@@ -1,0 +1,64 @@
+{
+    "categorias":  [
+                       {
+                           "id":  9,
+                           "nombre":  "Accesorios",
+                           "descripcion":  null,
+                           "productos":  10
+                       },
+                       {
+                           "id":  6,
+                           "nombre":  "Amplificadores",
+                           "descripcion":  null,
+                           "productos":  4
+                       },
+                       {
+                           "id":  3,
+                           "nombre":  "Bajos Eléctricos",
+                           "descripcion":  null,
+                           "productos":  3
+                       },
+                       {
+                           "id":  4,
+                           "nombre":  "Baterías",
+                           "descripcion":  null,
+                           "productos":  5
+                       },
+                       {
+                           "id":  10,
+                           "nombre":  "Estudio y Grabación",
+                           "descripcion":  null,
+                           "productos":  5
+                       },
+                       {
+                           "id":  1,
+                           "nombre":  "Guitarras Acústicas",
+                           "descripcion":  null,
+                           "productos":  5
+                       },
+                       {
+                           "id":  2,
+                           "nombre":  "Guitarras Eléctricas",
+                           "descripcion":  null,
+                           "productos":  5
+                       },
+                       {
+                           "id":  7,
+                           "nombre":  "Micrófonos",
+                           "descripcion":  null,
+                           "productos":  4
+                       },
+                       {
+                           "id":  8,
+                           "nombre":  "Pedales de Efectos",
+                           "descripcion":  null,
+                           "productos":  6
+                       },
+                       {
+                           "id":  5,
+                           "nombre":  "Teclados y Pianos",
+                           "descripcion":  null,
+                           "productos":  4
+                       }
+                   ]
+}

@@ -1,0 +1,12 @@
+{
+    "mensaje":  "Inicio de sesión exitoso.",
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJkZW1vQHNvbmlkb3Zpdm8uY2wiLCJub21icmUiOiJDbGllbnRlIERlbW8iLCJyb2wiOiJDbGllbnRlIiwiaWF0IjoxNzk1MzY4MzEwLCJleHAiOjE3OTUzNzE5MTAsImF1ZCI6InNvbmlkby12aXZvLWFwaSIsImlzcyI6InNvbmlkby12aXZvIn0.F8-FLvKn8LfFKtwtkEtq0GggzHj_Zj7Lxa5m8eXFoFQ",
+    "tipoToken":  "Bearer",
+    "expiraEn":  "2026-11-22T18:25:10.000Z",
+    "usuario":  {
+                    "id":  3,
+                    "nombre":  "Cliente Demo",
+                    "email":  "demo@sonidovivo.cl",
+                    "rol":  "Cliente"
+                }
+}

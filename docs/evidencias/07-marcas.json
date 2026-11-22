@@ -1,0 +1,134 @@
+{
+    "marcas":  [
+                   {
+                       "id":  9,
+                       "nombre":  "Arturia",
+                       "productos":  1
+                   },
+                   {
+                       "id":  15,
+                       "nombre":  "Audio-Tech.",
+                       "productos":  3
+                   },
+                   {
+                       "id":  16,
+                       "nombre":  "Blue",
+                       "productos":  1
+                   },
+                   {
+                       "id":  17,
+                       "nombre":  "Boss",
+                       "productos":  4
+                   },
+                   {
+                       "id":  21,
+                       "nombre":  "Dunlop",
+                       "productos":  1
+                   },
+                   {
+                       "id":  5,
+                       "nombre":  "Epiphone",
+                       "productos":  3
+                   },
+                   {
+                       "id":  20,
+                       "nombre":  "Ernie Ball",
+                       "productos":  3
+                   },
+                   {
+                       "id":  2,
+                       "nombre":  "Fender",
+                       "productos":  4
+                   },
+                   {
+                       "id":  13,
+                       "nombre":  "Fishman",
+                       "productos":  1
+                   },
+                   {
+                       "id":  25,
+                       "nombre":  "Focusrite",
+                       "productos":  1
+                   },
+                   {
+                       "id":  12,
+                       "nombre":  "Hartke",
+                       "productos":  1
+                   },
+                   {
+                       "id":  24,
+                       "nombre":  "Hercules",
+                       "productos":  2
+                   },
+                   {
+                       "id":  19,
+                       "nombre":  "Ibanez",
+                       "productos":  1
+                   },
+                   {
+                       "id":  11,
+                       "nombre":  "Marshall",
+                       "productos":  1
+                   },
+                   {
+                       "id":  10,
+                       "nombre":  "M-Audio",
+                       "productos":  1
+                   },
+                   {
+                       "id":  23,
+                       "nombre":  "Monster",
+                       "productos":  2
+                   },
+                   {
+                       "id":  18,
+                       "nombre":  "MXR",
+                       "productos":  1
+                   },
+                   {
+                       "id":  6,
+                       "nombre":  "Pearl",
+                       "productos":  2
+                   },
+                   {
+                       "id":  7,
+                       "nombre":  "Roland",
+                       "productos":  1
+                   },
+                   {
+                       "id":  26,
+                       "nombre":  "Sennheiser",
+                       "productos":  1
+                   },
+                   {
+                       "id":  14,
+                       "nombre":  "Shure",
+                       "productos":  2
+                   },
+                   {
+                       "id":  22,
+                       "nombre":  "Snark",
+                       "productos":  1
+                   },
+                   {
+                       "id":  4,
+                       "nombre":  "Squier",
+                       "productos":  3
+                   },
+                   {
+                       "id":  3,
+                       "nombre":  "Takamine",
+                       "productos":  1
+                   },
+                   {
+                       "id":  1,
+                       "nombre":  "Yamaha",
+                       "productos":  7
+                   },
+                   {
+                       "id":  8,
+                       "nombre":  "Zildjian",
+                       "productos":  2
+                   }
+               ]
+}

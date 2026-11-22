@@ -1,0 +1,42 @@
+{
+    "pedido":  {
+                   "id":  1,
+                   "numeroPedido":  "SV-6778087232",
+                   "idUsuario":  3,
+                   "cliente":  "Cliente Demo",
+                   "clienteEmail":  "demo@sonidovivo.cl",
+                   "fechaCreacion":  "2026-11-22T17:16:20.878Z",
+                   "fechaActualizacion":  "2026-11-22T17:16:20.878Z",
+                   "estado":  "EN_PREPARACION",
+                   "tipoEntrega":  "RETIRO_TIENDA",
+                   "nombreContacto":  "Cliente Demo",
+                   "emailContacto":  "demo@sonidovivo.cl",
+                   "telefonoContacto":  "+56 9 3333 3333",
+                   "direccionDespacho":  null,
+                   "subtotal":  8990,
+                   "costoEnvio":  0,
+                   "total":  8990,
+                   "detalle":  [
+                                   {
+                                       "id":  1,
+                                       "idProducto":  1,
+                                       "sku":  "AC001",
+                                       "nombre":  "Cuerdas Guitarra Eléctrica 09-42",
+                                       "modelo":  "Super Slinky",
+                                       "cantidad":  1,
+                                       "precioUnitario":  8990,
+                                       "subtotal":  8990
+                                   }
+                               ],
+                   "historial":  [
+                                     {
+                                         "id":  1,
+                                         "estadoAnterior":  null,
+                                         "estadoNuevo":  "EN_PREPARACION",
+                                         "fechaCambio":  "2026-11-22T17:16:20.878Z",
+                                         "usuario":  "Cliente Demo",
+                                         "observacion":  "Pedido creado por el cliente."
+                                     }
+                                 ]
+               }
+}

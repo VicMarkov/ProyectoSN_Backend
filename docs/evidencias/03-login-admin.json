@@ -1,0 +1,12 @@
+{
+    "mensaje":  "Inicio de sesión exitoso.",
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkBzb25pZG92aXZvLmNsIiwibm9tYnJlIjoiQWRtaW5pc3RyYWRvciBEZW1vIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc5NTM2ODMxMCwiZXhwIjoxNzk1MzcxOTEwLCJhdWQiOiJzb25pZG8tdml2by1hcGkiLCJpc3MiOiJzb25pZG8tdml2byJ9.3FM2uPKRX9P940zmuVbswJJkiQW2BpBkmq_gP4sauFA",
+    "tipoToken":  "Bearer",
+    "expiraEn":  "2026-11-22T18:25:10.000Z",
+    "usuario":  {
+                    "id":  1,
+                    "nombre":  "Administrador Demo",
+                    "email":  "admin@sonidovivo.cl",
+                    "rol":  "Administrador"
+                }
+}

@@ -1,0 +1,37 @@
+{
+    "usuarios":  [
+                     {
+                         "id":  1,
+                         "nombre":  "Administrador Demo",
+                         "email":  "admin@sonidovivo.cl",
+                         "telefono":  "+56 9 1111 1111",
+                         "rol":  "Administrador",
+                         "activo":  true,
+                         "fechaCreacion":  "2026-11-22T17:09:56.822Z"
+                     },
+                     {
+                         "id":  2,
+                         "nombre":  "Vendedor Demo",
+                         "email":  "vendedor@sonidovivo.cl",
+                         "telefono":  "+56 9 2222 2222",
+                         "rol":  "Vendedor",
+                         "activo":  true,
+                         "fechaCreacion":  "2026-11-22T17:09:56.822Z"
+                     },
+                     {
+                         "id":  3,
+                         "nombre":  "Cliente Demo",
+                         "email":  "demo@sonidovivo.cl",
+                         "telefono":  "+56 9 3333 3333",
+                         "rol":  "Cliente",
+                         "activo":  true,
+                         "fechaCreacion":  "2026-11-22T17:09:56.822Z"
+                     }
+                 ],
+    "paginacion":  {
+                       "pagina":  1,
+                       "limite":  10,
+                       "total":  3,
+                       "paginas":  1
+                   }
+}

@@ -717,3 +717,17 @@ el informe técnico con evidencias de Postman.
 | ☐ | El README explica cómo ejecutar o desplegar y comprobar lo que ya está construido | ✅ §8 |
 | ☐ | Organizamos el trabajo para dos semanas y dejamos claros los siguientes pasos | ✅ §9.3 |
 | ☐ | Todos pueden explicar las decisiones, el código inicial y el avance del equipo | ❌ Pendiente: revisión de defensa con el equipo antes de la entrega |
+
+---
+
+## 11. Estado EP3 y despliegue
+
+Ver documentacion detallada en docs/EP3_DEPLOY.md.
+
+Resumen:
+
+- Backend y frontend desplegados en http://54.198.104.140.
+- API y Swagger en http://54.198.104.140/api/docs.
+- Health: {"estado":"ok","baseDatos":"conectada"}.
+- Pruebas backend: 37/37 OK.
+- Pruebas frontend: 137/138 OK (1 fallo intencional de la rubrica).
