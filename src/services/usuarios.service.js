@@ -1,19 +1,12 @@
 import bcrypt from 'bcrypt';
 import * as usuariosRepo from '../repositories/usuarios.repo.js';
+import { toUsuarioResponse } from '../dto/usuario.dto.js';
 import { ErrorDeNegocio } from './errores.js';
 
 const COSTO_BCRYPT = 12;
 const ROLES_VALIDOS = ['Administrador', 'Vendedor', 'Cliente'];
 
-const publicarUsuario = (usuario) => ({
-  id: Number(usuario.id_usuario),
-  nombre: usuario.nombre,
-  email: usuario.email,
-  telefono: usuario.telefono || null,
-  rol: usuario.rol,
-  activo: usuario.activo,
-  fechaCreacion: usuario.fecha_creacion,
-});
+const publicarUsuario = toUsuarioResponse;
 
 const normalizarRol = (rol) => {
   const encontrado = ROLES_VALIDOS.find((nombre) => nombre.toLowerCase() === String(rol).toLowerCase());

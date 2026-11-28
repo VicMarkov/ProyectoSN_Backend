@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import * as usuariosRepo from '../repositories/usuarios.repo.js';
+import { toUsuarioResponse } from '../dto/usuario.dto.js';
 import { ErrorDeNegocio } from './errores.js';
 
 const ROL_CLIENTE = 3;
@@ -8,12 +9,7 @@ const ROL_CLIENTE = 3;
 const COSTO_BCRYPT = 12;
 const MENSAJE_CREDENCIALES = 'Correo electrónico o contraseña incorrectos.';
 
-const publicarUsuario = (usuario) => ({
-  id: Number(usuario.id_usuario),
-  nombre: usuario.nombre,
-  email: usuario.email,
-  rol: usuario.rol,
-});
+const publicarUsuario = toUsuarioResponse;
 
 export const registrar = async ({ nombre, email, password, telefono }) => {
   const existente = await usuariosRepo.buscarPorEmail(email);

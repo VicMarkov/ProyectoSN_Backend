@@ -1,24 +1,9 @@
 import { pool } from '../config/db.js';
 import * as productosRepo from '../repositories/productos.repo.js';
+import { toProductoResponse } from '../dto/producto.dto.js';
 import { ErrorDeNegocio } from './errores.js';
 
-const publicarProducto = (p) => ({
-  id: Number(p.id_producto),
-  sku: p.sku,
-  nombre: p.nombre,
-  modelo: p.modelo,
-  descripcion: p.descripcion,
-  precio: Number(p.precio),
-  stock: Number(p.stock),
-  stockMinimo: Number(p.stock_minimo),
-  idCategoria: Number(p.id_categoria),
-  idMarca: Number(p.id_marca),
-  categoria: p.categoria || undefined,
-  marca: p.marca || undefined,
-  activo: p.activo,
-  fechaCreacion: p.fecha_creacion,
-  fechaActualizacion: p.fecha_actualizacion,
-});
+const publicarProducto = toProductoResponse;
 
 const paginacion = (filtros, total) => ({
   pagina: filtros.pagina,

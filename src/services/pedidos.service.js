@@ -2,6 +2,7 @@ import { randomInt } from 'node:crypto';
 import { pool } from '../config/db.js';
 import * as pedidosRepo from '../repositories/pedidos.repo.js';
 import * as productosRepo from '../repositories/productos.repo.js';
+import { toPedidoResponse, toPedidoDetalleResponse, toHistorialResponse } from '../dto/pedido.dto.js';
 import { ErrorDeNegocio } from './errores.js';
 
 const COSTO_ENVIO = 4990;
@@ -12,46 +13,11 @@ const TRANSICIONES = {
   ENTREGADO: [],
 };
 
-const publicarPedido = (p) => ({
-  id: Number(p.id_pedido),
-  numeroPedido: p.numero_pedido,
-  idUsuario: Number(p.id_usuario),
-  cliente: p.cliente,
-  clienteEmail: p.cliente_email,
-  fechaCreacion: p.fecha_creacion,
-  fechaActualizacion: p.fecha_actualizacion,
-  estado: p.estado,
-  tipoEntrega: p.tipo_entrega,
-  nombreContacto: p.nombre_contacto,
-  emailContacto: p.email_contacto,
-  telefonoContacto: p.telefono_contacto,
-  direccionDespacho: p.direccion_despacho,
-  subtotal: Number(p.subtotal),
-  costoEnvio: Number(p.costo_envio),
-  total: Number(p.total),
-  items: p.items === undefined ? undefined : Number(p.items),
-  unidades: p.unidades === undefined ? undefined : Number(p.unidades),
-});
+const publicarPedido = toPedidoResponse;
 
-const publicarDetalle = (d) => ({
-  id: Number(d.id_pedido_detalle),
-  idProducto: Number(d.id_producto),
-  sku: d.sku,
-  nombre: d.nombre_producto,
-  modelo: d.modelo,
-  cantidad: Number(d.cantidad),
-  precioUnitario: Number(d.precio_unitario),
-  subtotal: Number(d.subtotal),
-});
+const publicarDetalle = toPedidoDetalleResponse;
 
-const publicarHistorial = (h) => ({
-  id: Number(h.id_historial),
-  estadoAnterior: h.estado_anterior,
-  estadoNuevo: h.estado_nuevo,
-  fechaCambio: h.fecha_cambio,
-  usuario: h.usuario,
-  observacion: h.observacion,
-});
+const publicarHistorial = toHistorialResponse;
 
 const generarNumeroPedido = async () => {
   for (let intento = 0; intento < 12; intento += 1) {

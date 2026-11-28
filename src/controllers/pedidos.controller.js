@@ -1,7 +1,8 @@
 import * as pedidosService from '../services/pedidos.service.js';
+import { toCrearPedidoRequest } from '../dto/pedido.dto.js';
 
 export const crear = async (req, res) => {
-  const pedido = await pedidosService.crearPedido(req.body, req.usuario);
+  const pedido = await pedidosService.crearPedido(toCrearPedidoRequest(req.body), req.usuario);
   res.status(201).json({ mensaje: 'Pedido creado correctamente.', pedido });
 };
 

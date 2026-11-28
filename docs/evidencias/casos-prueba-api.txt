@@ -1,5 +1,5 @@
 Casos de prueba de la API Sonido Vivo - evidencia de ejecución
-Fecha: 22-11-2026, 13:50:19
+Fecha: 28-11-2026, 15:53:43
 Servidor: http://localhost:3000  (Swagger UI: http://localhost:3000/api/docs)
 BD reiniciada con db/schema.sql + db/seed.sql antes de ejecutar.
 

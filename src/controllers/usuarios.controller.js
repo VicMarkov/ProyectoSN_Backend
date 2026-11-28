@@ -1,4 +1,10 @@
 import * as usuariosService from '../services/usuarios.service.js';
+import {
+  toCrearUsuarioRequest,
+  toActualizarUsuarioRequest,
+  toEstadoUsuarioRequest,
+  toPasswordUsuarioRequest,
+} from '../dto/usuario.dto.js';
 
 export const listar = async (req, res) => {
   const resultado = await usuariosService.listarUsuarios({
@@ -22,14 +28,14 @@ export const listarRoles = async (req, res) => {
 };
 
 export const crear = async (req, res) => {
-  const usuario = await usuariosService.crearUsuario(req.body);
+  const usuario = await usuariosService.crearUsuario(toCrearUsuarioRequest(req.body));
   res.status(201).json({ mensaje: 'Usuario creado correctamente.', usuario });
 };
 
 export const actualizar = async (req, res) => {
   const usuario = await usuariosService.actualizarUsuario(
     Number(req.params.id),
-    req.body,
+    toActualizarUsuarioRequest(req.body),
     req.usuario
   );
   res.json({ mensaje: 'Usuario actualizado correctamente.', usuario });
@@ -38,7 +44,7 @@ export const actualizar = async (req, res) => {
 export const cambiarEstado = async (req, res) => {
   const usuario = await usuariosService.cambiarEstadoUsuario(
     Number(req.params.id),
-    req.body.activo,
+    toEstadoUsuarioRequest(req.body).activo,
     req.usuario
   );
   res.json({
@@ -53,6 +59,6 @@ export const eliminar = async (req, res) => {
 };
 
 export const restablecerPassword = async (req, res) => {
-  await usuariosService.restablecerPassword(Number(req.params.id), req.body.password);
+  await usuariosService.restablecerPassword(Number(req.params.id), toPasswordUsuarioRequest(req.body).password);
   res.json({ mensaje: 'Contraseña actualizada correctamente.' });
 };

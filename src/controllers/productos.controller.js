@@ -1,4 +1,5 @@
 import * as productosService from '../services/productos.service.js';
+import { toCrearProductoRequest, toActualizarProductoRequest } from '../dto/producto.dto.js';
 
 export const listar = async (req, res) => {
   const resultado = await productosService.listarProductos({
@@ -37,14 +38,14 @@ export const listarMarcas = async (req, res) => {
 };
 
 export const crear = async (req, res) => {
-  const producto = await productosService.crearProducto(req.body);
+  const producto = await productosService.crearProducto(toCrearProductoRequest(req.body));
   res.status(201).json({ mensaje: 'Producto creado correctamente.', producto });
 };
 
 export const actualizar = async (req, res) => {
   const producto = await productosService.actualizarProducto(
     Number(req.params.id),
-    req.body,
+    toActualizarProductoRequest(req.body),
     req.usuario
   );
   res.json({ mensaje: 'Producto actualizado correctamente.', producto });
