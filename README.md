@@ -731,3 +731,14 @@ Resumen:
 - Health: {"estado":"ok","baseDatos":"conectada"}.
 - Pruebas backend: 37/37 OK.
 - Pruebas frontend: 137/138 OK (1 fallo intencional de la rubrica).
+
+---
+
+## 12. Integración con Axios y DTO (EP3)
+
+- Frontend usa Axios mediante src/services/api.js, con instancia compartida, aseURL, 	imeout, interceptor de token y manejo de errores.
+- Los servicios de autenticación, productos, usuarios y pedidos usan Axios y devuelven espuesta.data.
+- El frontend incluye DTOs de entrada y salida en src/dto/ para normalizar formularios y respuestas.
+- El backend incluye DTOs en src/dto/ para normalizar requests y responses.
+- Registro disponible desde la ventana de login mediante enlace a /registro.
+- Tras registrar, la página se recarga y el usuario inicia sesión manualmente.
