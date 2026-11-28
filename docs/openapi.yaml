@@ -13,7 +13,7 @@ info:
 servers:
   - url: http://localhost:3000
     description: Desarrollo local
-  - url: http://3.211.234.101
+  - url: http://52.205.148.200
     description: Despliegue EC2
 tags:
   - name: auth

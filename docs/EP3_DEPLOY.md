@@ -15,15 +15,15 @@ El backend ya cubre el bloque EP3:
 
 ### 11.2 Despliegue en EC2 + RDS
 
-- Backend: `~/sonido-vivo-backend` en la EC2 (`ubuntu@3.211.234.101`).
+- Backend: `~/sonido-vivo-backend` en la EC2 (`ubuntu@52.205.148.200`).
 - Base de datos: RDS PostgreSQL `sonidovivo`.
 - Proceso Node: servicio systemd `sonido-vivo`, reinicio automático.
 - Frontend: build estático en `/var/www/sonido-vivo`.
 - Proxy: nginx en puerto 80, same-origin, `/api` hacia `127.0.0.1:3000`.
 - URLs públicas:
-  - Frontend: `http://3.211.234.101`
-  - API/Swagger: `http://3.211.234.101/api/docs`
-  - Health: `http://3.211.234.101/api/health`
+  - Frontend: `http://52.205.148.200`
+  - API/Swagger: `http://52.205.148.200/api/docs`
+  - Health: `http://52.205.148.200/api/health`
 
 ### 11.3 Variables de entorno en EC2
 
@@ -39,7 +39,7 @@ PGPASSWORD=<solo en EC2>
 PGSSL=true
 JWT_SECRET=<generado en EC2>
 JWT_EXPIRES_IN=1h
-CORS_ORIGINS=http://3.211.234.101
+CORS_ORIGINS=http://52.205.148.200
 RATE_LIMIT_MAX=50
 ```
 

@@ -726,8 +726,8 @@ Ver documentacion detallada en docs/EP3_DEPLOY.md.
 
 Resumen:
 
-- Backend y frontend desplegados en http://3.211.234.101.
-- API y Swagger en http://3.211.234.101/api/docs.
+- Backend y frontend desplegados en http://52.205.148.200.
+- API y Swagger en http://52.205.148.200/api/docs.
 - Health: {"estado":"ok","baseDatos":"conectada"}.
 - Pruebas backend: 37/37 OK.
 - Pruebas frontend: 137/138 OK (1 fallo intencional de la rubrica).
