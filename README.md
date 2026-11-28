@@ -285,3 +285,12 @@ Las evidencias de despliegue se guardan en `docs/evidencias/`:
 - Pruebas backend: `37/37 OK`.
 - Pruebas frontend: `137/138 OK` (1 fallo intencional de la rúbrica).
 - Pendientes: carrito persistente en backend, contacto, HTTPS y refresh/revocación de tokens.
+
+
+---
+
+## 13. Manual e integracion
+
+- Manual de usuario: `docs/manual-usuario.md`
+- Documento de integracion: `docs/integracion.md`
+- Capturas manuales: `capturas/Screenshot_1.png` a `capturas/Screenshot_16.png`
